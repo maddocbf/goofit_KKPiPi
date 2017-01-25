@@ -31,10 +31,10 @@ const fptype _mD0 = 1.8645;
 const fptype piPlusMass = 0.13957018;
 const fptype piMinusMass = 0.13957018; 
 const fptype kPlusMass = 0.493677; 
-const fptype kMinusMass = 0.493677;
+const fptype kMinusMass = .493677;
 int main (int argc, char** argv) {
   DecayInfo_DP* DKKPP_DI = new DecayInfo_DP();
-  DKKPP_DI->meson_radius =5;
+  DKKPP_DI->meson_radius =1.5;
   DKKPP_DI->particle_masses.push_back(_mD0);
   DKKPP_DI->particle_masses.push_back(piPlusMass);
   DKKPP_DI->particle_masses.push_back(piMinusMass);
@@ -51,10 +51,10 @@ int main (int argc, char** argv) {
   Variable* a1W  =      new Variable("a1W", 0.526); 
   
 
-  Variable* K11270M  = new Variable("K1_1270M", 1.272);
+Variable* K11270M  = new Variable("K1_1270M", 1.272);
   Variable* K11270W  = new Variable("K1_1270W", 0.09); 
- // Variable* K1430M  = new Variable("K0_1430M", 1.425);
- // Variable* K1430W  = new Variable("K0_1430W", 0.27);
+  Variable* K1430M  = new Variable("K0_1430M", 1.425);
+  Variable* K1430W  = new Variable("K0_1430W", 0.27);
 
   Variable* Kstar1410M    = new Variable("K1410M", 1.414);
   Variable* Kstar1410W    = new Variable("K1410W", 0.232); 
@@ -68,11 +68,11 @@ int main (int argc, char** argv) {
  // Variable* f0_1370M  = new Variable("f0_1370M", 1.350);
  // Variable* f0_1370W  = new Variable("f0_1370W", 0.35); 
 
- // Variable* K1_1400M  = new Variable("K1_1400M", 1.403);
- // Variable* K1_1400W  = new Variable("K1_1400W", 0.174); 
+  Variable* K1_1400M  = new Variable("K1_1400M", 1.403);
+  Variable* K1_1400W  = new Variable("K1_1400W", 0.174); 
 
- // Variable* K2_1430M  = new Variable("K2_1430M", 1.4256);
- // Variable* K2_1430W  = new Variable("K2_1430W", 0.0985); 
+  Variable* K2_1430M  = new Variable("K2_1430M", 1.4256);
+  Variable* K2_1430W  = new Variable("K2_1430W", 0.0985); 
   
   Variable* phi1020M = new Variable("phi1020M", 1.019); 
   Variable* phi1020W = new Variable("phi1020W", 0.004); 
@@ -86,36 +86,48 @@ int main (int argc, char** argv) {
  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  std::vector<SpinFactor*> SFK1P2Kstar1430;//K1(1270)+(Kstar0 pi+)K- 
+  SFK1P2Kstar1430.push_back( new SpinFactor("SF", SF_4Body::DtoAP1_AtoVP2_VtoP3P4, 3,0,1,2));
+  SFK1P2Kstar1430.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,2,0,1,3));
+
+  std::vector<SpinFactor*> SFK1M2Kstar1430;//K1(1270)-(Kstar0bar pi-)K+ 
+  SFK1M2Kstar1430.push_back( new SpinFactor("SF", SF_4Body::DtoAP1_AtoVP2_VtoP3P4, 2,1,0,3)); 
+  SFK1M2Kstar1430.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,3,1,0,2));
+
   std::vector<SpinFactor*> SFK1P2Kstar;//K1(1270)+(Kstar0 pi+)K- 
   SFK1P2Kstar.push_back( new SpinFactor("SF", SF_4Body::DtoAP1_AtoVP2_VtoP3P4, 3,0,1,2));
+  SFK1P2Kstar.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,2,0,1,3));
 
   std::vector<SpinFactor*> SFK1M2Kstar;//K1(1270)-(Kstar0bar pi-)K+ 
   SFK1M2Kstar.push_back( new SpinFactor("SF", SF_4Body::DtoAP1_AtoVP2_VtoP3P4, 2,1,0,3));
+  SFK1M2Kstar.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,3,1,0,2));
 
   std::vector<SpinFactor*> SFK1P2Rho;//K1(1270)+(rho K+)K- 
   SFK1P2Rho.push_back( new SpinFactor("SF", SF_4Body::DtoAP1_AtoVP2_VtoP3P4, 3,2,0,1)); 
-  SFK1P2Rho.push_back( new SpinFactor("SF",SF_4Body::FF_123_4_L1,1,2,0,3));
+  SFK1P2Rho.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,1,2,0,3));
 
   std::vector<SpinFactor*> SFK1M2Rho;//K1(1270)-(rho K-)K+ 
   SFK1M2Rho.push_back( new SpinFactor("SF", SF_4Body::DtoAP1_AtoVP2_VtoP3P4, 2,3,1,0)); 
-  SFK1M2Rho.push_back( new SpinFactor("SF",SF_4Body::FF_123_4_L1,0,2,1,3));
+  SFK1M2Rho.push_back( new SpinFactor("SF",SF_4Body::FF_123_4_L1,0,3,1,2));
 
 
   std::vector<SpinFactor*> SFKstarP2Kstar;//Kstar(1410)+(Kstar0 pi+)K- 
   SFKstarP2Kstar.push_back( new SpinFactor("SF", SF_4Body::DtoPP1_PtoVP2_VtoP3P4, 3,0,1,2));
+  SFKstarP2Kstar.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,2,0,1,3));
 
   std::vector<SpinFactor*> SFKstarM2Kstar;//Kstar(1410)-(Kstar0 pi-)K+ 
   SFKstarM2Kstar.push_back( new SpinFactor("SF", SF_4Body::DtoPP1_PtoVP2_VtoP3P4,2,1,0,3));  
+  SFKstarM2Kstar.push_back( new SpinFactor("SF", SF_4Body::FF_123_4_L1,3,1,0,2));
 
   std::vector<SpinFactor*> SFKstarKstarS;
   SFKstarKstarS.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_S, 0,3,1,2));  
 
   std::vector<SpinFactor*> SFKstarKstarP;
-  SFKstarKstarP.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_S, 0,3,1,2));  
+  SFKstarKstarP.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_P, 0,3,1,2));  
   SFKstarKstarP.push_back(new SpinFactor("SF",SF_4Body::FF_12_34_L1, 0,3,1,2));
   
   std::vector<SpinFactor*> SFKstarKstarD;
-  SFKstarKstarD.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_S, 0,3,1,2));  
+  SFKstarKstarD.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_D, 0,3,1,2));  
   SFKstarKstarD.push_back(new SpinFactor("SF",SF_4Body::FF_12_34_L2, 0,3,1,2));
  
 
@@ -125,7 +137,7 @@ int main (int argc, char** argv) {
  
 
   std::vector<SpinFactor*> SFPhiRhoP; 
-  SFPhiRhoP.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_S, 2,3,0,1)); 
+  SFPhiRhoP.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_P, 2,3,0,1)); 
   SFPhiRhoP.push_back(new SpinFactor("SF",SF_4Body::FF_12_34_L1, 2,3,0,1));
  
 
@@ -135,7 +147,8 @@ int main (int argc, char** argv) {
  
   std::vector<SpinFactor*> SFPhiFZero;
   SFPhiFZero.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_D, 2,3,0,1)); 
-  
+  SFPhiFZero.push_back( new SpinFactor("SF",SF_4Body::FF_12_34_L2,2,3,1,2));
+
  // std::vector<SpinFactor*> SFPhipipi; 
  // SFPhipipi.push_back( new SpinFactor("SF", SF_4Body::DtoVP1P2_VtoP3P4, 0,1,2,3)); 
 
@@ -147,49 +160,57 @@ int main (int argc, char** argv) {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  std::vector<Lineshape*> LSK1P2Kstar1430;
+  LSK1P2Kstar1430.push_back( new Lineshape("K1(1270)+", K11270M, K11270W, 1, M_23_1, LS::BW, FF::BL2) );    
+  LSK1P2Kstar1430.push_back( new Lineshape("Kstar(1430)", K1430M, K1430W, 0, M_23, LS::BW, FF::BL2) ); 
+
+  std::vector<Lineshape*> LSK1M2Kstar1430; 
+  LSK1M2Kstar1430.push_back( new Lineshape("K1(1270)-", K11270M, K11270W, 1, M_14_2, LS::BW, FF::BL2) ); 
+  LSK1M2Kstar1430.push_back( new Lineshape("Kstar(1430)", K1430M, K1430W,0, M_14, LS::BW, FF::BL2) );  
+
   std::vector<Lineshape*> LSK1P2Kstar;
-  LSK1P2Kstar.push_back( new Lineshape("K1(1270)+", K11270M, K11270W, 1, M_23_1, LS::BW, FF::BL2) );    
-  LSK1P2Kstar.push_back( new Lineshape("Kstar(1430)", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
+  LSK1P2Kstar.push_back( new Lineshape("K1(1270)+", K11270M, K11270W, 0, M_23_1, LS::BW, FF::BL2) );    
+  LSK1P2Kstar.push_back( new Lineshape("Kstar(892)", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
 
   std::vector<Lineshape*> LSK1M2Kstar; 
-  LSK1M2Kstar.push_back( new Lineshape("K1(1270)-", K11270M, K11270W, 1, M_14_2, LS::BW, FF::BL2) ); 
-  LSK1M2Kstar.push_back( new Lineshape("Kstar(1430)", Kstar892M, Kstar892W,1, M_14, LS::BW, FF::BL2) );  
+  LSK1M2Kstar.push_back( new Lineshape("K1(1270)-", K11270M, K11270W, 0, M_14_2, LS::BW, FF::BL2) ); 
+  LSK1M2Kstar.push_back( new Lineshape("Kstar(892)", Kstar892M, Kstar892W,1, M_14, LS::BW, FF::BL2) );  
 
   std::vector<Lineshape*> LSK1P2Rho;
-  LSK1P2Rho.push_back( new Lineshape("K1(1270)+", K11270M, K11270W, 1, M_12_3, LS::BW, FF::BL2) );
-  LSK1P2Rho.push_back( new Lineshape("Rho ", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) );   
+  LSK1P2Rho.push_back( new Lineshape("K1(1270)+", K11270M, K11270W, 0, M_12_3, LS::BW, FF::BL2) );
+  LSK1P2Rho.push_back( new Lineshape("Rho(770)", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) );   
 
   std::vector<Lineshape*> LSK1M2Rho; 
-  LSK1M2Rho.push_back( new Lineshape("K1(1270)-", K11270M, K11270W, 1, M_12_4, LS::BW, FF::BL2) ); 
-  LSK1M2Rho.push_back( new Lineshape("Rho ", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) ); 
+  LSK1M2Rho.push_back( new Lineshape("K1(1270)-", K11270M, K11270W, 0, M_12_4, LS::BW, FF::BL2) ); 
+  LSK1M2Rho.push_back( new Lineshape("Rho(770)", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) ); 
  
   std::vector<Lineshape*> LSKstarP2Kstar;
   LSKstarP2Kstar.push_back( new Lineshape("Kstar1410", Kstar1410M, Kstar1410W, 1, M_23_1, LS::BW, FF::BL2) ); 
-  LSKstarP2Kstar.push_back( new Lineshape("Kstar1430", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) );  
+  LSKstarP2Kstar.push_back( new Lineshape("Kstar892", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) );  
 
   std::vector<Lineshape*> LSKstarM2Kstar; 
   LSKstarM2Kstar.push_back( new Lineshape("Kstar1410", Kstar1410M, Kstar1410W, 1, M_14_2, LS::BW, FF::BL2) ); 
-  LSKstarM2Kstar.push_back( new Lineshape("Kstar1430", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
+  LSKstarM2Kstar.push_back( new Lineshape("Kstar(892)", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
    
   std::vector<Lineshape*> LSKstarKstarbarS; 
-  LSKstarKstarbarS.push_back( new Lineshape("Kstar", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
-  LSKstarKstarbarS.push_back( new Lineshape("Kstarbar", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
+  LSKstarKstarbarS.push_back( new Lineshape("Kstar(892) ", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
+  LSKstarKstarbarS.push_back( new Lineshape("Kstarbar(892)", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
   
   std::vector<Lineshape*> LSKstarKstarbarP; 
-  LSKstarKstarbarP.push_back( new Lineshape("Kstar", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
-  LSKstarKstarbarP.push_back( new Lineshape("Kstarbar", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
+  LSKstarKstarbarP.push_back( new Lineshape("Kstar(892) ", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
+  LSKstarKstarbarP.push_back( new Lineshape("Kstarbar(892)", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
   
   std::vector<Lineshape*> LSKstarKstarbarD; 
-  LSKstarKstarbarD.push_back( new Lineshape("Kstar", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
-  LSKstarKstarbarD.push_back( new Lineshape("Kstarbar", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
+  LSKstarKstarbarD.push_back( new Lineshape("Kstar(892)", Kstar892M, Kstar892W, 1, M_23, LS::BW, FF::BL2) ); 
+  LSKstarKstarbarD.push_back( new Lineshape("Kstarbar(892)", Kstar892M, Kstar892W, 1, M_14, LS::BW, FF::BL2) ); 
   
   std::vector<Lineshape*> LSPhiRhoS; 
-  LSPhiRhoS.push_back( new Lineshape("Phi ", phi1020M, phi1020W, 1, M_34, LS::BW, FF::BL2) ); 
-  LSPhiRhoS.push_back( new Lineshape("Rho ", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) ); 
+  LSPhiRhoS.push_back( new Lineshape("Phi(1020) ", phi1020M, phi1020W, 1, M_34, LS::BW, FF::BL2) ); 
+  LSPhiRhoS.push_back( new Lineshape("Rho(770)", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) ); 
 
   std::vector<Lineshape*> LSPhiRhoP; 
-  LSPhiRhoP.push_back( new Lineshape("Phi ", phi1020M, phi1020W, 1, M_34, LS::BW, FF::BL2) ); 
-  LSPhiRhoP.push_back( new Lineshape("Rho ", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) ); 
+  LSPhiRhoP.push_back( new Lineshape("Phi(1020) ", phi1020M, phi1020W, 1, M_34, LS::BW, FF::BL2) ); 
+  LSPhiRhoP.push_back( new Lineshape("Rho(770) ", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) ); 
 
 
   std::vector<Lineshape*> LSPhiRhoD; 
@@ -198,7 +219,7 @@ int main (int argc, char** argv) {
 
   std::vector<Lineshape*> LSPhiFZero; 
   LSPhiFZero.push_back( new Lineshape("Phi ", phi1020M, phi1020W, 1, M_34, LS::BW, FF::BL2) ); 
-  LSPhiFZero.push_back( new Lineshape("Rho ", FZeroMass, FZeroWidth, 1, M_12, LS::BW, FF::BL2) ); 
+  LSPhiFZero.push_back( new Lineshape("Rho ", FZeroMass, FZeroWidth, 0, M_12, LS::BW, FF::BL2) ); 
 
 
  // std::vector<Lineshape*> LSPhipipi; 
@@ -221,57 +242,62 @@ int main (int argc, char** argv) {
   // This means that it is important for symmetrized amplitueds that the spinfactors and lineshapes are in the "right" order
   
   //RS Model
-  Amplitude* AMP_K1P2Kstar       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", 0.388963),     new Variable("K1P2Kstar_imag", -0.00522288  ), LSK1P2Kstar, SFK1P2Kstar, 1);
+   Amplitude* AMP_K1P2Kstar1430       = new Amplitude( "K1P2Kstar1430",   new Variable("K1P2Kstar1430_real", 1 ),     new Variable("K1P2Kstar1430_imag",  0 ), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);
 
-  Amplitude* AMP_K1M2Kstar       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", -0.0975218  ),   new Variable("K1M2Kstar_imag", 0.0504912  ), LSK1M2Kstar, SFK1M2Kstar , 1);
+  Amplitude* AMP_K1M2Kstar1430       = new Amplitude( "K1M2Kstar1430",   new Variable("K1M2Kstar1430_real", 1 ),   new Variable("K1M2Kstar1430_imag", 0), LSK1M2Kstar1430, SFK1M2Kstar1430 , 1);
 
-  Amplitude* AMP_K1P2Rho       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", -0.240436  ), new Variable("K1P2Rho_imag", 0.593767  ), LSK1P2Rho, SFK1P2Rho, 1);
+ //Amplitude* AMP_K1P2Kstar       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", 1),     new Variable("K1P2Kstar_imag", 0), LSK1P2Kstar, SFK1P2Kstar, 1);
 
-  Amplitude* AMP_K1M2Rho      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real",  -0.261381 ),  new Variable("K1M2Rho_imag", 0.427101  ), LSK1M2Rho, SFK1M2Rho, 1);
- 
- Amplitude* AMP_KstarP2Kstar         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real", -1.06048  ),  new Variable("KstarP2Kstar_imag", -1.16765  ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
- 
- Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", 0.193442),   new Variable("KstarM2Kstar_imag", 0.443065  ), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
-   
- Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", -0.365781 ),  new Variable("KstarKstarbarS_imag", -0.403859  ), LSKstarKstarbarS  , SFKstarKstarS , 1);
- 
+  //Amplitude* AMP_K1M2Kstar       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", 1 ),   new Variable("K1M2Kstar_imag", 0 ), LSK1M2Kstar, SFK1M2Kstar , 1);
 
- Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", -0.439269 ),  new Variable("KstarKstarbarP_imag", -0.529275  ), LSKstarKstarbarP  , SFKstarKstarP , 1);
- 
+  //Amplitude* AMP_K1P2Rho       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", 1 ), new Variable("K1P2Rho_imag", 0), LSK1P2Rho, SFK1P2Rho, 1);
 
- Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", -0.496064 ),  new Variable("KstarKstarbarD_imag", 0.118252  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+  //Amplitude* AMP_K1M2Rho      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real", 1 ),  new Variable("K1M2Rho_imag", 0 ), LSK1M2Rho, SFK1M2Rho, 1);
   
- Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
-
-
- Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", -0.018757  ),  new Variable("PhiRhoP_imag", 0.564089  ), LSPhiRhoP  , SFPhiRhoP , 1);
-
-  Amplitude* AMP_PhiRhoD        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", 3.11341),   new Variable("PhiRhoD_imag",1.38139  ), LSPhiRhoD  , SFPhiRhoD , 1);
+  //Amplitude* AMP_KstarP2Kstar         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real",1),  new Variable("KstarP2Kstar_imag", 0 ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
  
-  Amplitude* AMP_PhiFZero        = new Amplitude( "PhiFZero",    new Variable("PhiFZero", -1.01171),   new Variable("PhiFZero_imag", 0.0339364  ), LSPhiRhoD  , SFPhiRhoD , 1);
+ //Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", 1 ),   new Variable("KstarM2Kstar_imag", 0), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
+   
+ //Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", 1 ),  new Variable("KstarKstarbarS_imag", 0), LSKstarKstarbarS  , SFKstarKstarS , 1);
+ 
+
+ //Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", 1),  new Variable("KstarKstarbarP_imag", 0), LSKstarKstarbarP  , SFKstarKstarP , 1);
+ 
+
+ //Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", 1),  new Variable("KstarKstarbarD_imag", 0  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+  
+ //Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
+
+
+ //Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", 1 ),  new Variable("PhiRhoP_imag", 0 ), LSPhiRhoP  , SFPhiRhoP , 1);
+
+  //Amplitude* AMP_PhiRhoD        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", 1  ),   new Variable("PhiRhoD_imag", 0  ), LSPhiRhoD  , SFPhiRhoD , 1);
+ 
+  //Amplitude* AMP_PhiFZero        = new Amplitude( "PhiFZero",    new Variable("PhiFZero",1  ),   new Variable("PhiFZero_imag", 0 ), LSPhiRhoD  , SFPhiRhoD , 1);
  
  Amplitude* AMP_NonRes1      = new Amplitude( "NonRes1",  new Variable("Nonres1_real", 0.179343),  new Variable("NonRes1_imag", 0.0  ), LSNonRes1  , SFNonRes1 , 1);
 
   Amplitude* AMP_NonRes2     = new Amplitude( "NonRes2", new Variable("NonRes2_real", 1.79348e-01 ),  new Variable("NonRes2_imag", 1.34666e1  ), LSNonRes2  , SFNonRes2 , 1);
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
-  DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
-  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
-  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
-  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
-  DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
+  DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar1430);
+  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
+  //DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
+  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
+  //DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
+  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
+  //DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
+  //DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
+  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
+  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
+  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
+  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
+  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
+  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
+  //DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes1);
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////i////////////////////////////////////////////////////////////////////////////
