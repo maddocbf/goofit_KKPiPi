@@ -264,7 +264,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
  Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", 1),  new Variable("KstarKstarbarP_imag", 0), LSKstarKstarbarP  , SFKstarKstarP , 1);
  
 
- //Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", 1),  new Variable("KstarKstarbarD_imag", 0  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+ Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", 0.707),  new Variable("KstarKstarbarD_imag", -0.707 ), LSKstarKstarbarD  , SFKstarKstarD , 1);
   
  //Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
 
@@ -293,7 +293,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   //DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
   //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
   DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
   //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
   //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
   //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
@@ -308,7 +308,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   DKKPP_DI->_ymixing = new Variable("ymixing", 0.0061);
   // DK3P_DI->_xmixing = new Variable("xmixing", 0, 0.00001, -.15, .15);
   // DK3P_DI->_ymixing = new Variable("ymixing", 0, 0.00001, -.15, .15);
-  DKKPP_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/SQRT(300.0));  
+  DKKPP_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/sqrt(300.0));  
 
 
   Variable* m12 = new Variable("m12", 0, 3);

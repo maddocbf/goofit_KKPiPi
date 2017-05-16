@@ -308,7 +308,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   DKKPP_DI->_ymixing = new Variable("ymixing", 0.0061);
   // DK3P_DI->_xmixing = new Variable("xmixing", 0, 0.00001, -.15, .15);
   // DK3P_DI->_ymixing = new Variable("ymixing", 0, 0.00001, -.15, .15);
-  DKKPP_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/SQRT(300.0));  
+  DKKPP_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/sqrt(300.0));  
 
 
   Variable* m12 = new Variable("m12", 0, 3);

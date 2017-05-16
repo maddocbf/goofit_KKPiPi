@@ -40,7 +40,17 @@ int main (int argc, char** argv) {
   DKKPP_DI->particle_masses.push_back(piMinusMass);
   DKKPP_DI->particle_masses.push_back(kPlusMass);
   DKKPP_DI->particle_masses.push_back(kMinusMass);
- 
+ double Amp[30];  
+ fstream input("AmplitudeMC.txt", std::ios_base::in);
+  while(input >> Amp->value)
+  {
+	printf("%f", Amp);
+	Amplitude[i] = Amp; 
+//	Amp_Imag[i] = Amp_Imag[i]; 
+	i=i+1;  
+  }
+
+
   Variable* RhoMass  =  new Variable("rho_mass", 0.77526);
   Variable* RhoWidth =  new Variable("rho_width", 0.1478); 
   Variable* Kstar892M   =   new Variable("K892M", 0.89581);
@@ -242,38 +252,38 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   // This means that it is important for symmetrized amplitueds that the spinfactors and lineshapes are in the "right" order
   
   //RS Model
-   Amplitude* AMP_K1P2Kstar1430       = new Amplitude( "K1P2Kstar1430",   new Variable("K1P2Kstar1430_real", 1 ),     new Variable("K1P2Kstar1430_imag",  0 ), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);
+   Amplitude* AMP_K1P2Kstar1430       = new Amplitude( "K1P2Kstar1430",   new Variable("K1P2Kstar1430_real", Amp[0] ),     new Variable("K1P2Kstar1430_imag",  0.428719  ), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);
 
-  Amplitude* AMP_K1M2Kstar1430       = new Amplitude( "K1M2Kstar1430",   new Variable("K1M2Kstar1430_real", 1 ),   new Variable("K1M2Kstar1430_imag", 0), LSK1M2Kstar1430, SFK1M2Kstar1430 , 1);
+  Amplitude* AMP_K1M2Kstar1430       = new Amplitude( "K1M2Kstar1430",   new Variable("K1M2Kstar1430_real", 0.860897  ),   new Variable("K1M2Kstar1430_imag", 0.304352  ), LSK1M2Kstar1430, SFK1M2Kstar1430 , 1);
 
- //Amplitude* AMP_K1P2Kstar       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", 1),     new Variable("K1P2Kstar_imag", 0), LSK1P2Kstar, SFK1P2Kstar, 1);
+ Amplitude* AMP_K1P2Kstar       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", 0.150802 ),     new Variable("K1P2Kstar_imag", 0.277876  ), LSK1P2Kstar, SFK1P2Kstar, 1);
 
-  //Amplitude* AMP_K1M2Kstar       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", 1 ),   new Variable("K1M2Kstar_imag", 0 ), LSK1M2Kstar, SFK1M2Kstar , 1);
+  Amplitude* AMP_K1M2Kstar       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", 0.126711 ),   new Variable("K1M2Kstar_imag", 0.266050  ), LSK1M2Kstar, SFK1M2Kstar , 1);
 
-  //Amplitude* AMP_K1P2Rho       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", 1 ), new Variable("K1P2Rho_imag", 0), LSK1P2Rho, SFK1P2Rho, 1);
+  Amplitude* AMP_K1P2Rho       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", 0.405204 ), new Variable("K1P2Rho_imag", 0.681315  ), LSK1P2Rho, SFK1P2Rho, 1);
 
-  //Amplitude* AMP_K1M2Rho      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real", 1 ),  new Variable("K1M2Rho_imag", 0 ), LSK1M2Rho, SFK1M2Rho, 1);
+  Amplitude* AMP_K1M2Rho      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real", 0.378541  ),  new Variable("K1M2Rho_imag", 0.812302  ), LSK1M2Rho, SFK1M2Rho, 1);
   
-  //Amplitude* AMP_KstarP2Kstar         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real",1),  new Variable("KstarP2Kstar_imag", 0 ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
+  Amplitude* AMP_KstarP2Kstar         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real", 0.516063),  new Variable("KstarP2Kstar_imag", -0.128229  ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
  
- //Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", 1 ),   new Variable("KstarM2Kstar_imag", 0), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
+ Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", 0.495658 ),   new Variable("KstarM2Kstar_imag", -0.291656  ), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
    
- //Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", 1 ),  new Variable("KstarKstarbarS_imag", 0), LSKstarKstarbarS  , SFKstarKstarS , 1);
+ Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", -0.0451147 ),  new Variable("KstarKstarbarS_imag", -0.309025  ), LSKstarKstarbarS  , SFKstarKstarS , 1);
  
 
- //Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", 1),  new Variable("KstarKstarbarP_imag", 0), LSKstarKstarbarP  , SFKstarKstarP , 1);
+ Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", 0.0940584),  new Variable("KstarKstarbarP_imag", -0.257563  ), LSKstarKstarbarP  , SFKstarKstarP , 1);
  
 
- //Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", 1),  new Variable("KstarKstarbarD_imag", 0  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+ Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", -1.58879),  new Variable("KstarKstarbarD_imag", -2.62092  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
   
- //Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
+ Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
 
 
- //Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", 1 ),  new Variable("PhiRhoP_imag", 0 ), LSPhiRhoP  , SFPhiRhoP , 1);
+ Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", -0.216518 ),  new Variable("PhiRhoP_imag", 0.689537  ), LSPhiRhoP  , SFPhiRhoP , 1);
 
-  //Amplitude* AMP_PhiRhoD        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", 1  ),   new Variable("PhiRhoD_imag", 0  ), LSPhiRhoD  , SFPhiRhoD , 1);
+  Amplitude* AMP_PhiRhoD        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", 13.9376  ),   new Variable("PhiRhoD_imag", -0.00109108  ), LSPhiRhoD  , SFPhiRhoD , 1);
  
-  //Amplitude* AMP_PhiFZero        = new Amplitude( "PhiFZero",    new Variable("PhiFZero",1  ),   new Variable("PhiFZero_imag", 0 ), LSPhiRhoD  , SFPhiRhoD , 1);
+  Amplitude* AMP_PhiFZero        = new Amplitude( "PhiFZero",    new Variable("PhiFZero", 2.28555  ),   new Variable("PhiFZero_imag", 2.49373  ), LSPhiRhoD  , SFPhiRhoD , 1);
  
  Amplitude* AMP_NonRes1      = new Amplitude( "NonRes1",  new Variable("Nonres1_real", 0.179343),  new Variable("NonRes1_imag", 0.0  ), LSNonRes1  , SFNonRes1 , 1);
 
@@ -284,20 +294,20 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
 
 
   DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar1430);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
+  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
+  DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
+  DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes1);
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////i////////////////////////////////////////////////////////////////////////////

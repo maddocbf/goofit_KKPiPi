@@ -26,6 +26,7 @@
 
 using namespace std;
 
+
 // Constants used in more than one PDF component. 
 const fptype _mD0 = 1.8645; 
 const fptype piPlusMass = 0.13957018;
@@ -33,6 +34,8 @@ const fptype piMinusMass = 0.13957018;
 const fptype kPlusMass = 0.493677; 
 const fptype kMinusMass = .493677;
 int main (int argc, char** argv) {
+  cudaSetDevice(0);
+  
   DecayInfo_DP* DKKPP_DI = new DecayInfo_DP();
   DKKPP_DI->meson_radius =1.5;
   DKKPP_DI->particle_masses.push_back(_mD0);
@@ -40,7 +43,30 @@ int main (int argc, char** argv) {
   DKKPP_DI->particle_masses.push_back(piMinusMass);
   DKKPP_DI->particle_masses.push_back(kPlusMass);
   DKKPP_DI->particle_masses.push_back(kMinusMass);
- 
+ double AmpVec[30]; 
+ int i =0;
+ double Amp;  
+ fstream input("LHCbDZeroBarAmp.txt", std::ios_base::in);
+  while(input >> Amp)
+  {
+	AmpVec[i]=Amp;
+	i=i+1;  
+  }
+
+ double AmpVec2[30]; 
+ int i2 =0;
+ double Amp2;  
+ fstream input2("LHCbDZeroAmp.txt", std::ios_base::in);
+  while(input2 >> Amp2)
+  {
+	AmpVec2[i]=Amp2;
+	i2=i2+1;  
+  }
+
+
+
+
+
   Variable* RhoMass  =  new Variable("rho_mass", 0.77526);
   Variable* RhoWidth =  new Variable("rho_width", 0.1478); 
   Variable* Kstar892M   =   new Variable("K892M", 0.89581);
@@ -242,39 +268,80 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   // This means that it is important for symmetrized amplitueds that the spinfactors and lineshapes are in the "right" order
   
   //RS Model
-   Amplitude* AMP_K1P2Kstar1430       = new Amplitude( "K1P2Kstar1430",   new Variable("K1P2Kstar1430_real", 1 ),     new Variable("K1P2Kstar1430_imag",  0 ), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);
+   Amplitude* AMP_K1P2Kstar1430       = new Amplitude( "K1P2Kstar1430",   new Variable("K1P2Kstar1430_real", AmpVec[0] ),     new Variable("K1P2Kstar1430_imag",  AmpVec[1]  ), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);
+ Amplitude* AMP_K1P2Kstar1430_WS       = new Amplitude( "K1P2Kstar1430",   new Variable("K1P2Kstar1430_real", AmpVec2[0] ),     new Variable("K1P2Kstar1430_imag",  AmpVec2[1]  ), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);
 
-  Amplitude* AMP_K1M2Kstar1430       = new Amplitude( "K1M2Kstar1430",   new Variable("K1M2Kstar1430_real", 1 ),   new Variable("K1M2Kstar1430_imag", 0), LSK1M2Kstar1430, SFK1M2Kstar1430 , 1);
 
- //Amplitude* AMP_K1P2Kstar       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", 1),     new Variable("K1P2Kstar_imag", 0), LSK1P2Kstar, SFK1P2Kstar, 1);
+  Amplitude* AMP_K1M2Kstar1430       = new Amplitude( "K1M2Kstar1430",   new Variable("K1M2Kstar1430_real", AmpVec[2] ),   new Variable("K1M2Kstar1430_imag", AmpVec[3]   ), LSK1M2Kstar1430, SFK1M2Kstar1430 , 1);
 
-  //Amplitude* AMP_K1M2Kstar       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", 1 ),   new Variable("K1M2Kstar_imag", 0 ), LSK1M2Kstar, SFK1M2Kstar , 1);
+  Amplitude* AMP_K1M2Kstar1430_WS       = new Amplitude( "K1M2Kstar1430",   new Variable("K1M2Kstar1430_real", AmpVec2[2] ),   new Variable("K1M2Kstar1430_imag", AmpVec2[3]   ), LSK1M2Kstar1430, SFK1M2Kstar1430 , 1);
 
-  //Amplitude* AMP_K1P2Rho       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", 1 ), new Variable("K1P2Rho_imag", 0), LSK1P2Rho, SFK1P2Rho, 1);
 
-  //Amplitude* AMP_K1M2Rho      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real", 1 ),  new Variable("K1M2Rho_imag", 0 ), LSK1M2Rho, SFK1M2Rho, 1);
-  
-  //Amplitude* AMP_KstarP2Kstar         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real",1),  new Variable("KstarP2Kstar_imag", 0 ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
+ Amplitude* AMP_K1P2Kstar       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", AmpVec[4]),     new Variable("K1P2Kstar_imag",AmpVec[5]  ), LSK1P2Kstar, SFK1P2Kstar, 1);
+
+ Amplitude* AMP_K1P2Kstar_WS       = new Amplitude( "K1P2Kstar",   new Variable("K1P2Kstar_real", AmpVec2[4]),     new Variable("K1P2Kstar_imag",AmpVec2[5]  ), LSK1P2Kstar, SFK1P2Kstar, 1);
+
+
+  Amplitude* AMP_K1M2Kstar       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", AmpVec[6] ),   new Variable("K1M2Kstar_imag", AmpVec[7]  ), LSK1M2Kstar, SFK1M2Kstar , 1);
+
+  Amplitude* AMP_K1M2Kstar_WS       = new Amplitude( "K1M2Kstar",   new Variable("K1M2Kstar_real", AmpVec2[6] ),   new Variable("K1M2Kstar_imag", AmpVec2[7]  ), LSK1M2Kstar, SFK1M2Kstar , 1);
+
+
+  Amplitude* AMP_K1P2Rho       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", AmpVec[8] ), new Variable("K1P2Rho_imag", AmpVec[9]  ), LSK1P2Rho, SFK1P2Rho, 1);
+
+  Amplitude* AMP_K1P2Rho_WS       = new Amplitude( "K1P2Rho",   new Variable("K1P2Rho_real", AmpVec2[8] ), new Variable("K1P2Rho_imag", AmpVec2[9]  ), LSK1P2Rho, SFK1P2Rho, 1);
+
+
+  Amplitude* AMP_K1M2Rho      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real", AmpVec[10] ),  new Variable("K1M2Rho_imag", AmpVec[11]  ), LSK1M2Rho, SFK1M2Rho, 1);
  
- //Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", 1 ),   new Variable("KstarM2Kstar_imag", 0), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
+  Amplitude* AMP_K1M2Rho_WS      = new Amplitude( "K1M2Rho",    new Variable("K1M2Rho_real", AmpVec2[10] ),  new Variable("K1M2Rho_imag", AmpVec2[11]  ), LSK1M2Rho, SFK1M2Rho, 1);
+  
+  Amplitude* AMP_KstarP2Kstar         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real", AmpVec[12]  ),  new Variable("KstarP2Kstar_imag",AmpVec[13]  ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
+  
+  Amplitude* AMP_KstarP2Kstar_WS         = new Amplitude( "KstarP2Kstar",      new Variable("KstarP2Kstar_real", AmpVec2[12]  ),  new Variable("KstarP2Kstar_imag",AmpVec2[13]  ), LSKstarP2Kstar, SFKstarP2Kstar, 1);
+ 
+
+ Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", AmpVec[14] ),   new Variable("KstarM2Kstar_imag",AmpVec[15] ), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
+  Amplitude* AMP_KstarM2Kstar_WS     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", AmpVec2[14] ),   new Variable("KstarM2Kstar_imag",AmpVec2[15] ), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
    
- //Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", 1 ),  new Variable("KstarKstarbarS_imag", 0), LSKstarKstarbarS  , SFKstarKstarS , 1);
- 
-
- //Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", 1),  new Variable("KstarKstarbarP_imag", 0), LSKstarKstarbarP  , SFKstarKstarP , 1);
- 
-
- //Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", 1),  new Variable("KstarKstarbarD_imag", 0  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+ Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", AmpVec[16]),  new Variable("KstarKstarbarS_imag", AmpVec[17]  ), LSKstarKstarbarS  , SFKstarKstarS , 1);
   
- //Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
-
-
- //Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", 1 ),  new Variable("PhiRhoP_imag", 0 ), LSPhiRhoP  , SFPhiRhoP , 1);
-
-  //Amplitude* AMP_PhiRhoD        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", 1  ),   new Variable("PhiRhoD_imag", 0  ), LSPhiRhoD  , SFPhiRhoD , 1);
+ Amplitude* AMP_KstarKstarbarS_WS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", AmpVec2[16]),  new Variable("KstarKstarbarS_imag", AmpVec2[17]  ), LSKstarKstarbarS  , SFKstarKstarS , 1);
  
-  //Amplitude* AMP_PhiFZero        = new Amplitude( "PhiFZero",    new Variable("PhiFZero",1  ),   new Variable("PhiFZero_imag", 0 ), LSPhiRhoD  , SFPhiRhoD , 1);
+
+
+ Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", AmpVec[18]),  new Variable("KstarKstarbarP_imag", AmpVec[19]  ), LSKstarKstarbarP  , SFKstarKstarP , 1);
  
+ Amplitude* AMP_KstarKstarbarP_WS          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real", AmpVec2[18]),  new Variable("KstarKstarbarP_imag", AmpVec2[19]  ), LSKstarKstarbarP  , SFKstarKstarP , 1);
+ 
+
+
+ Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", AmpVec[20]),  new Variable("KstarKstarbarD_imag", AmpVec[21]  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+ 
+ Amplitude* AMP_KstarKstarbarD_WS          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", AmpVec2[20]),  new Variable("KstarKstarbarD_imag", AmpVec2[21]  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
+  
+ 
+ Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   AmpVec[22]),  new Variable("PhiRhoS_imag", AmpVec[23]), LSPhiRhoS  , SFPhiRhoS , 1);
+ 
+ Amplitude* AMP_PhiRhoS_WS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   AmpVec2[22]),  new Variable("PhiRhoS_imag", AmpVec2[23]), LSPhiRhoS  , SFPhiRhoS , 1);
+
+
+
+ Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", AmpVec[24] ),  new Variable("PhiRhoP_imag", AmpVec[25]  ), LSPhiRhoP  , SFPhiRhoP , 1);
+
+ Amplitude* AMP_PhiRhoP_WS       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", AmpVec2[24] ),  new Variable("PhiRhoP_imag", AmpVec2[25]  ), LSPhiRhoP  , SFPhiRhoP , 1);
+
+
+  Amplitude* AMP_PhiRhoD        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", AmpVec[26]  ),   new Variable("PhiRhoD_imag", AmpVec[27]), LSPhiRhoD  , SFPhiRhoD , 1);
+ 
+  Amplitude* AMP_PhiRhoD_WS        = new Amplitude( "PhiRhoD",    new Variable("PhiRhoD", AmpVec2[26]  ),   new Variable("PhiRhoD_imag", AmpVec2[27]), LSPhiRhoD  , SFPhiRhoD , 1);
+ 
+
+  Amplitude* AMP_PhiFZero        = new Amplitude( "PhiFZero",    new Variable("PhiFZero",AmpVec[28]   ),   new Variable("PhiFZero_imag", AmpVec[29] ), LSPhiRhoD  , SFPhiRhoD , 1);
+ 
+  Amplitude* AMP_PhiFZero_WS        = new Amplitude( "PhiFZero",    new Variable("PhiFZero",AmpVec2[28]   ),   new Variable("PhiFZero_imag", AmpVec2[29] ), LSPhiRhoD  , SFPhiRhoD , 1);
+ 
+
  Amplitude* AMP_NonRes1      = new Amplitude( "NonRes1",  new Variable("Nonres1_real", 0.179343),  new Variable("NonRes1_imag", 0.0  ), LSNonRes1  , SFNonRes1 , 1);
 
   Amplitude* AMP_NonRes2     = new Amplitude( "NonRes2", new Variable("NonRes2_real", 1.79348e-01 ),  new Variable("NonRes2_imag", 1.34666e1  ), LSNonRes2  , SFNonRes2 , 1);
@@ -284,20 +351,42 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
 
 
   DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar1430);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
-  //DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
-  //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
+  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
+  DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
+  DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
+  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
+
+
+
+  DKKPP_DI->amplitudes_B.push_back(AMP_K1P2Kstar1430_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_K1M2Kstar1430_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_K1P2Kstar_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_K1M2Kstar_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_K1P2Rho_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_K1M2Rho_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_KstarP2Kstar_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_KstarM2Kstar_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_KstarKstarbarS_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_KstarKstarbarP_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_KstarKstarbarD_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_PhiRhoS_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_PhiRhoP_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_PhiRhoD_WS);
+  DKKPP_DI->amplitudes_B.push_back(AMP_PhiFZero_WS); 
+ 
+
+
+
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes1);
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////i////////////////////////////////////////////////////////////////////////////
@@ -308,7 +397,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   DKKPP_DI->_ymixing = new Variable("ymixing", 0.0061);
   // DK3P_DI->_xmixing = new Variable("xmixing", 0, 0.00001, -.15, .15);
   // DK3P_DI->_ymixing = new Variable("ymixing", 0, 0.00001, -.15, .15);
-  DKKPP_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/sqrt(300.0));  
+  DKKPP_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 0.24);  
 
 
   Variable* m12 = new Variable("m12", 0, 3);
@@ -317,8 +406,8 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   Variable* cos34 = new Variable("cos34", -1, 1);
   Variable* phi = new Variable("phi", -3.5, 3.5);
   Variable* eventNumber = new Variable("eventNumber", 0, INT_MAX);
-  //Variable* dtime = new Variable("dtime", 0, 10);
-  //Variable* sigmat = new Variable("sigmat",-3,3);
+  Variable* dtime = new Variable("dtime", 0, 10);
+  Variable* sigmat = new Variable("sigmat",-3,3);
   Variable* constantOne = new Variable("constantOne", 1); 
   Variable* constantZero = new Variable("constantZero", 0);
  
@@ -330,13 +419,13 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   vars.push_back(cos34);
   vars.push_back(phi);
   vars.push_back(eventNumber); 
-  //vars.push_back(dtime); 
-  //vars.push_back(sigmat); 
+  vars.push_back(dtime); 
+  vars.push_back(sigmat); 
   UnbinnedDataSet currData(vars); 
 
  
-  //DKKPP_DI->_xmixing->value = strtof(argv[5], NULL);
-  //DKKPP_DI->_ymixing->value = strtof(argv[6], NULL);
+  //DKKPP_DI->_xmixing->value = strtof(argv[5], 0.5);
+  //DKKPP_DI->_ymixing->value = strtof(argv[6], 0.5);
 
   vector<Variable*> observables;
   vector<Variable*> coefficients; 
@@ -348,16 +437,21 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   observables.push_back(cos34);
   observables.push_back(phi);
   observables.push_back(eventNumber);
-  //observables.push_back(dtime);
- // observables.push_back(sigmat);
+  observables.push_back(dtime);
+  observables.push_back(sigmat);
   offsets.push_back(constantZero);
   offsets.push_back(constantZero);
   coefficients.push_back(constantOne); 
   fprintf(stderr, "I'm here zero"); 
   TruthResolution* dat = new TruthResolution();
+  fprintf(stderr, "I'm here zero"); 
+
   PolynomialPdf* eff = new PolynomialPdf("constantEff", observables, coefficients, offsets, 0);
-  DPPdf* dp = new DPPdf("test_TD", observables, DKKPP_DI, eff, 1);
- 
+  fprintf(stderr, "I'm here zero"); 
+
+  TDDP4* dp = new TDDP4("test_TD", observables, DKKPP_DI,dat,  eff,0, 1);
+fprintf(stderr, "Words");  
+
  // dp->setGenDecayTimeLimit(0,3.5); // this corresponds to rougly 97% of the exponential. So this should be ok. And speeds up Generation significantly compared to [0,5]  
 
   fprintf(stderr,"I'm here one\n"); 
@@ -375,7 +469,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
 
   fprintf(stderr, "I'm here two\n"); 
 
-  //mcbooster::FlagAcceptReject(0,0);
+  mcbooster::FlagAcceptReject(0,0);
   int generatedEvents = 0;
   int RunNum = 0;
   fprintf(stderr, "I'm here three\n");
@@ -385,7 +479,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   unsigned int genEvts =strtoul(argv[2], NULL,0);
 
   double wmax = 0;
-  //mcbooster::FlagAcceptReject FlagIt =1;// mcbooster::FlagAcceptReject(0.1,5);
+  mcbooster::FlagAcceptReject FlagIt =1;// mcbooster::FlagAcceptReject(0.1,5);
 
   fprintf(stderr, "I'm here"); 
   while(generatedEvents < genEvts )

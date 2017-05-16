@@ -40,7 +40,7 @@ int main (int argc, char** argv) {
 
   unsigned int MCevents = 0;
 //Load in nTuple and give it to currData/addevent 
-  fstream input("DZeroLHCbData.txt", std::ios_base::in);
+  fstream input("DZeroMCDZeroMC.txt", std::ios_base::in);
   while(input >> m12->value >> m34->value >> cos12->value >> cos34->value >> phi->value){
     eventNumber->value = MCevents++; 
     currData.addEvent();
@@ -238,7 +238,42 @@ int main (int argc, char** argv) {
 
   std::vector<Lineshape*> LSNonRes2; 
   LSNonRes2.push_back( new Lineshape("NonRes2 ", new Variable("NR3", 0.0), new Variable("NR4", 0.0),1, M_34_2, LS::nonRes, FF::BL2) ); 
- /////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  std::vector<SpinFactor*> SF_K892_rho770_P;
+  SF_K892_rho770_P.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_P, 0, 1, 2, 3) );
+  SF_K892_rho770_P.push_back( new SpinFactor("SF", SF_4Body::FF_12_34_L1, 0, 1, 2, 3) );
+  SF_K892_rho770_P.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_P, 3, 1, 2, 0) );
+  SF_K892_rho770_P.push_back( new SpinFactor("SF", SF_4Body::FF_12_34_L1, 3, 1, 2, 0) );
+  std::vector<Lineshape*> LS_K892_rho770_P;
+  LS_K892_rho770_P.push_back( new Lineshape("rho(770)", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) );
+  LS_K892_rho770_P.push_back( new Lineshape("K*(892)bar", K892M, K892W, 1, M_34, LS::BW, FF::BL2) );
+  LS_K892_rho770_P.push_back( new Lineshape("rho(770)", RhoMass, RhoWidth, 1, M_24, LS::BW, FF::BL2) );
+  LS_K892_rho770_P.push_back( new Lineshape("K*(892)bar", K892M, K892W, 1, M_13, LS::BW, FF::BL2) );
+
+  std::vector<SpinFactor*> SF_K892_rho770_D;
+  SF_K892_rho770_D.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_D, 0, 1, 2, 3) );
+  SF_K892_rho770_D.push_back( new SpinFactor("SF", SF_4Body::FF_12_34_L2, 0, 1, 2, 3) );
+  SF_K892_rho770_D.push_back( new SpinFactor("SF", SF_4Body::DtoV1V2_V1toP1P2_V2toP3P4_D, 3, 1, 2, 0) );
+  SF_K892_rho770_D.push_back( new SpinFactor("SF", SF_4Body::FF_12_34_L2, 3, 1, 2, 0) );
+  std::vector<Lineshape*> LS_K892_rho770_D;
+  LS_K892_rho770_D.push_back( new Lineshape("rho(770)", RhoMass, RhoWidth, 1, M_12, LS::BW, FF::BL2) );
+  LS_K892_rho770_D.push_back( new Lineshape("K*(892)bar", K892M, K892W, 1, M_34, LS::BW, FF::BL2) );
+  LS_K892_rho770_D.push_back( new Lineshape("rho(770)", RhoMass, RhoWidth, 1, M_24, LS::BW, FF::BL2) );
+  LS_K892_rho770_D.push_back( new Lineshape("K*(892)bar", K892M, K892W, 1, M_13, LS::BW, FF::BL2) );
+
+
+
+  Amplitude* AMP_KRhoP = new Amplitude("KRhoP ",new Variable("AMP_KRhoP", -0.1, 0.001, 0,0),new Variable("AMP_KRhoP", 0.1, 0.001, 0, 0), LSK1P2Kstar1430, SFK1P2Kstar1430, 1);  
+
+  Amplitude* AMP_K1M2Kstar1430 = new Amplitude("K1(1270)-(Kstar1430 pi-)K+ ", new Variable("AmpK1M2Kstar1430_R", -0.1, 0.001,0,0), new Variable("AmpK1M2Kstar1430_I", 0.1, 0.001, 0,0), LSK1M2Kstar1430, SFK1M2Kstar1430, 1); 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
  // Amplitude* AMP_K1P2Kstar = new Amplitude("K1(1270)+(Kstar0 pi+)K- ", new Variable("amp_real1", -0.1, 0.001,0,0), new Variable("amp_imag1", 0.1, 0.001, 0,0), LSK1P2Kstar, SFK1P2Kstar, 1);
 
@@ -406,7 +441,7 @@ int main (int argc, char** argv) {
   DPPdf* dp = new DPPdf("test", observables, DKKPP_DI, eff,1e6);
 
   Variable* constant = new Variable("constant", 0.1); 
-  Variable* constant2 = new Variable("constant2", 1.0); 
+  Variable* constant2 = new Variable("constant", 1.0); 
   vars.clear();
   vars.push_back(constant);
   PolynomialPdf backgr("backgr", m12, vars); 

@@ -299,8 +299,8 @@ int main (int argc, char** argv) {
   
   //RS Model
   Amplitude* amp_K892_rho770_S       = new Amplitude( "K892_rho770_S",   new Variable("K892_rho770_S_real",   1.0),     new Variable("K892_rho770_S_imag", 0.0), LS_K892_rho770_S, SF_K892_rho770_S, 2);
-  Amplitude* amp_K892_rho770_P       = new Amplitude( "K892_rho770_P",   new Variable("K892_rho770_P_real",   1.531),   new Variable("K892_rho770_P_imag", -0.886), LS_K892_rho770_P, SF_K892_rho770_P , 2);
-  Amplitude* amp_K892_rho770_D       = new Amplitude( "K892_rho770_D",   new Variable("K892_rho770_D_real",    20.513), new Variable("K892_rho770_D_imag",20.398), LS_K892_rho770_D, SF_K892_rho770_D, 2);
+  Amplitude* amp_K892_rho770_P       = new Amplitude( "K892_rho770_P",   new Variable("K892_rho770_P_real",   1.0),   new Variable("K892_rho770_P_imag", 0.0), LS_K892_rho770_P, SF_K892_rho770_P , 2);
+  Amplitude* amp_K892_rho770_D       = new Amplitude( "K892_rho770_D",   new Variable("K892_rho770_D_real",    1.0), new Variable("K892_rho770_D_imag",0.0), LS_K892_rho770_D, SF_K892_rho770_D, 2);
   Amplitude* amp_K1410_rho770_P      = new Amplitude( "K1410_rho770",    new Variable("K1410_rho770_P_real",   4.001),  new Variable("K1410_rho770_P_imag",-2.620), LS_K1410_rho770_P, SF_K1410_rho770_P, 2);
   Amplitude* amp_K892_f0_600         = new Amplitude( "K892_f0600",      new Variable("K892_f0600_real",      -0.770),  new Variable("K892_f0600_imag",  -1.530), LS_K892_f0_600, SF_K892_f0_600, 2);
   Amplitude* amp_rho1450_K0_1430     = new Amplitude( "rho1450_K0_1430", new Variable("rho1450_K0_1430_real", -0.110),   new Variable("rho1450_K0_1430_imag",  1.814), LS_rho1450_K0_1430  , SF_rho1450_K0_1430 , 2);
@@ -329,42 +329,42 @@ int main (int argc, char** argv) {
   Amplitude* amp_WS_K1_1400_K892        = new Amplitude("WS_K1_1400_K892",    new Variable("WS_K1_1400_K892_real",        -3.347),  new Variable("WS_K1_1400_K892_imag",     -2.237), LS_K1_1400_K892  , SF_K1_1400_K892 , 2);
   Amplitude* amp_WS_nonRes              = new Amplitude("WS_nonRes",            new Variable("WS_nonRes_real",  -0.456), new Variable("WS_nonRes_imag",              -0.041), LS_nonRes, SF_nonRes, 2);
 
-  DK3P_DI->amplitudes_B.push_back(amp_K892_rho770_S);
+  //DK3P_DI->amplitudes_B.push_back(amp_K892_rho770_S);
   DK3P_DI->amplitudes_B.push_back(amp_K892_rho770_P);
   DK3P_DI->amplitudes_B.push_back(amp_K892_rho770_D);
-  DK3P_DI->amplitudes_B.push_back(amp_K1410_rho770_P);
-  DK3P_DI->amplitudes_B.push_back(amp_K892_f0_600);
-  DK3P_DI->amplitudes_B.push_back(amp_rho1450_K0_1430);
-  DK3P_DI->amplitudes_B.push_back(amp_K1460_K892);
-  DK3P_DI->amplitudes_B.push_back(amp_K1460_f0_1370);
-  DK3P_DI->amplitudes_B.push_back(amp_K1_1270_K892);
-  DK3P_DI->amplitudes_B.push_back(amp_K1_1270_rho770);
-  DK3P_DI->amplitudes_B.push_back(amp_K1_1270_K0_1430);
-  DK3P_DI->amplitudes_B.push_back(amp_K1_1400_K892);
-  DK3P_DI->amplitudes_B.push_back(amp_NonResA_K892);
-  DK3P_DI->amplitudes_B.push_back(amp_K2_1430_K892);
-  DK3P_DI->amplitudes_B.push_back(amp_K2_1430_rho770);
-  DK3P_DI->amplitudes_B.push_back(amp_a1_rho770);
-  DK3P_DI->amplitudes_B.push_back(amp_a1_f0_600);
-  DK3P_DI->amplitudes_B.push_back(amp_a1_rho770_D);
-  DK3P_DI->amplitudes_B.push_back(amp_nonRes);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1410_rho770_P);
+  //DK3P_DI->amplitudes_B.push_back(amp_K892_f0_600);
+  //DK3P_DI->amplitudes_B.push_back(amp_rho1450_K0_1430);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1460_K892);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1460_f0_1370);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1_1270_K892);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1_1270_rho770);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1_1270_K0_1430);
+  //DK3P_DI->amplitudes_B.push_back(amp_K1_1400_K892);
+  //DK3P_DI->amplitudes_B.push_back(amp_NonResA_K892);
+  //DK3P_DI->amplitudes_B.push_back(amp_K2_1430_K892);
+  //DK3P_DI->amplitudes_B.push_back(amp_K2_1430_rho770);
+  //DK3P_DI->amplitudes_B.push_back(amp_a1_rho770);
+  //DK3P_DI->amplitudes_B.push_back(amp_a1_f0_600);
+  //DK3P_DI->amplitudes_B.push_back(amp_a1_rho770_D);
+  //DK3P_DI->amplitudes_B.push_back(amp_nonRes);
 
-  DK3P_DI->amplitudes.push_back(amp_WS_K892_rho770_S);
-  DK3P_DI->amplitudes.push_back(amp_WS_K892_rho770_P);
-  DK3P_DI->amplitudes.push_back(amp_WS_K892_rho770_D);
-  DK3P_DI->amplitudes.push_back(amp_WS_rho1450_K0_1430);
-  DK3P_DI->amplitudes.push_back(amp_WS_K1_1270_K892);
-  DK3P_DI->amplitudes.push_back(amp_WS_K1_1270_rho770);
-  DK3P_DI->amplitudes.push_back(amp_WS_K1_1270_K0_1430);
-  DK3P_DI->amplitudes.push_back(amp_WS_K1_1400_K892);
-  DK3P_DI->amplitudes.push_back(amp_WS_nonRes);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K892_rho770_S);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K892_rho770_P);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K892_rho770_D);
+  //DK3P_DI->amplitudes.push_back(amp_WS_rho1450_K0_1430);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K1_1270_K892);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K1_1270_rho770);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K1_1270_K0_1430);
+  //DK3P_DI->amplitudes.push_back(amp_WS_K1_1400_K892);
+  //DK3P_DI->amplitudes.push_back(amp_WS_nonRes);
 
   DK3P_DI->_tau = new Variable("tau", 0.4101);
   DK3P_DI->_xmixing = new Variable("xmixing", 0.0049);
   DK3P_DI->_ymixing = new Variable("ymixing", 0.0061);
   // DK3P_DI->_xmixing = new Variable("xmixing", 0, 0.00001, -.15, .15);
   // DK3P_DI->_ymixing = new Variable("ymixing", 0, 0.00001, -.15, .15);
-  DK3P_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/SQRT(300.0));  
+  DK3P_DI->_SqWStoRSrate = new Variable("SqWStoRSrate", 1.0/sqrt(300.0));  
 
 
   Variable* m12 = new Variable("m12", 0, 3);
@@ -414,7 +414,7 @@ int main (int argc, char** argv) {
   PolynomialPdf* eff = new PolynomialPdf("constantEff", observables, coefficients, offsets, 0);
   TDDP4* dp = new TDDP4("test_TD", observables, DK3P_DI, dat, eff, 0, 1);
  
-  dp->setGenDecayTimeLimit(0,3.5); // this corresponds to rougly 97% of the exponential. So this should be ok. And speeds up Generation significantly compared to [0,5] 
+  //dp->setGenDecayTimeLimit(0,3.5); // this corresponds to rougly 97% of the exponential. So this should be ok. And speeds up Generation significantly compared to [0,5] 
 
   TFile *file = new TFile( argv[4] , "RECREATE");
   TTree *tree = new TTree("events", "events");
