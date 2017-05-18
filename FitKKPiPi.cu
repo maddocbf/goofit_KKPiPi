@@ -3,8 +3,9 @@
 #include <fstream>
 
 // GooFit stuff
-#include "goofit/FitManager.h"
+#include "goofit/Application.h"
 #include "goofit/Variable.h" 
+#include "goofit/fitting/FitManagerMinuit1.h"
 #include "goofit/PDFs/PolynomialPdf.h" 
 #include "goofit/PDFs/AddPdf.h"
 #include "goofit/UnbinnedDataSet.h"
@@ -20,11 +21,23 @@ const fptype kMinusMass = 0.493677;
 
 int main (int argc, char** argv) {
 
+  // Place this at the beginning of main
+  GooFit::Application app{"Optional discription", argc, argv};
+  
+  // Command line options can be added here.
+  
+  try {
+      app.run();
+  } catch(const GooFit::ParseError &e) {
+      app.exit(e);
+  }
+
+
   Variable* m12 = new Variable("m12", 0, 3);
   Variable* m34 = new Variable("m34", 0, 3); 
   Variable* cos12 = new Variable("cos12", -1, 1);
   Variable* cos34 = new Variable("cos34", -1, 1);
-  Variable* phi = new Variable("phi", 0.0, 6.28);
+  Variable* phi = new Variable("phi", 0.0, 2*M_PI);
   Variable* eventNumber = new Variable("eventNumber", 0, INT_MAX);
 
   double Amplitudes[30]; 
@@ -41,8 +54,10 @@ int main (int argc, char** argv) {
   unsigned int MCevents = 0;
 //Load in nTuple and give it to currData/addevent 
   fstream input("DZeroLHCbData.txt", std::ios_base::in);
-  while(input >> m12->value >> m34->value >> cos12->value >> cos34->value >> phi->value){
-    eventNumber->value = MCevents++; 
+  while(input >> *m12 >> *m34 >> *cos12 >> *cos34 >> *phi){
+    //if(!*m12 || !*m34 || !*cos12 || !*cos34 || !*phi)
+    //    continue;
+    *eventNumber = MCevents++; 
     currData.addEvent();
   }
 
@@ -415,7 +430,7 @@ int main (int argc, char** argv) {
   signal->setData(&currData);
   dp->setDataSize(currData.getNumEvents(), 6); 
 
-  FitManager datapdf(signal);
+  GooFit::FitManagerMinuit1 datapdf(signal);
   datapdf.fit();
   
   return 0; 
