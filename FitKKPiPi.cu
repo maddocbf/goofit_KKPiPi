@@ -281,7 +281,7 @@ int main (int argc, char** argv) {
 
   Amplitude* AMP_KstarKstarbarD = new Amplitude("KstarKstarD ", new Variable("AmpKstarKstarbarD_R", -0.1, 0.001,0,0), new Variable("AmpKstarKstarbarD_I",  -0.1,0.001, 0,0), LSKstarKstarbarD, SFKstarKstarD, 1);
 
-  Amplitude* AMP_PhiRhoSFix = new Amplitude("PhiRhoS", new Variable("AmpPhiRhoS_R", 1, 0,0,0), new Variable("AmpPhiRhoS_I", 0, 0, 0,0), LSPhiRhoS, SFPhiRhoS, 1);
+  Amplitude* AMP_PhiRhoSFix = new Amplitude("PhiRhoS", new Variable("AmpPhiRhoS_R", 1), new Variable("AmpPhiRhoS_I", 0), LSPhiRhoS, SFPhiRhoS, 1);
 
   Amplitude* AMP_PhiRhoP = new Amplitude("PhiRhoP", new Variable("AmpPhiRhoP_R", -0.1, 0.001,0,0), new Variable("AmpPhiRhoP_I", 0.1, 0.001, 0,0), LSPhiRhoP, SFPhiRhoP, 1);
 
