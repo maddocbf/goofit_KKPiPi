@@ -8,6 +8,7 @@
 #include <string>
 
 // GooFit stuff
+#include "goofit/Application.h"
 #include "goofit/Variable.h" 
 #include "goofit/PDFs/PolynomialPdf.h" 
 #include "goofit/UnbinnedDataSet.h"
@@ -34,7 +35,16 @@ const fptype piMinusMass = 0.13957018;
 const fptype kPlusMass = 0.493677; 
 const fptype kMinusMass = .493677;
 int main (int argc, char** argv) {
-  cudaSetDevice(0);
+
+  GooFit::Application app{"Optional discription", argc, argv};
+  
+  // Command line options can be added here.
+  
+  try {
+      app.run();
+  } catch(const GooFit::ParseError &e) {
+      app.exit(e);
+  }
   
   DecayInfo_DP* DKKPP_DI = new DecayInfo_DP();
   DKKPP_DI->meson_radius =1.5;

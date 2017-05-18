@@ -6,6 +6,7 @@
 #include "goofit/Application.h"
 #include "goofit/Variable.h" 
 #include "goofit/fitting/FitManagerMinuit1.h"
+#include "goofit/fitting/FitManagerMinuit2.h"
 #include "goofit/PDFs/PolynomialPdf.h" 
 #include "goofit/PDFs/AddPdf.h"
 #include "goofit/UnbinnedDataSet.h"
@@ -25,11 +26,13 @@ int main (int argc, char** argv) {
   GooFit::Application app{"Optional discription", argc, argv};
   
   // Command line options can be added here.
+  bool minuit1;
+  app.add_flag("--minuit1", minuit1, "Use Minuit 1 instead of 2");
   
   try {
       app.run();
   } catch(const GooFit::ParseError &e) {
-      app.exit(e);
+      return app.exit(e);
   }
 
 
@@ -430,8 +433,13 @@ int main (int argc, char** argv) {
   signal->setData(&currData);
   dp->setDataSize(currData.getNumEvents(), 6); 
 
-  GooFit::FitManagerMinuit1 datapdf(signal);
-  datapdf.fit();
-  
-  return 0; 
+  if(minuit1) {
+    GooFit::FitManagerMinuit1 datapdf(signal);
+    datapdf.fit();
+    return 0; 
+  } else {
+    GooFit::FitManagerMinuit2 datapdf(signal);
+    datapdf.fit();
+    return datapdf; 
+  }
 }
