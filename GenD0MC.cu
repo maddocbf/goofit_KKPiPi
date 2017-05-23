@@ -66,7 +66,7 @@ int main (int argc, char** argv) {
  double AmpVec[30]; 
  int i =0;
  double Amp;  
- fstream input("LHCbDZeroAmp.txt", std::ios_base::in);
+ fstream input("minuit1DZeroFit.txt", std::ios_base::in);
   while(input >> Amp)
   {
 	AmpVec[i]=Amp;
@@ -319,21 +319,21 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar1430);
-  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
-  DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
-  DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
-  DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
+ // DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar1430);
+ // DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar1430);
+ // DKKPP_DI->amplitudes.push_back(AMP_K1P2Kstar);
+ // DKKPP_DI->amplitudes.push_back(AMP_K1M2Kstar);
+ // DKKPP_DI->amplitudes.push_back(AMP_K1P2Rho);
+ // DKKPP_DI->amplitudes.push_back(AMP_K1M2Rho);
+ // DKKPP_DI->amplitudes.push_back(AMP_KstarP2Kstar);
+ // DKKPP_DI->amplitudes.push_back(AMP_KstarM2Kstar);
+ // DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
+ // DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
+ // DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
   DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
   DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
   DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
-  DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
+  //DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes1);
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes2);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////i////////////////////////////////////////////////////////////////////////////

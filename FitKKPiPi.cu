@@ -11,6 +11,11 @@
 #include "goofit/PDFs/AddPdf.h"
 #include "goofit/UnbinnedDataSet.h"
 #include "goofit/PDFs/DP4Pdf.h"
+
+#include <Minuit2/MnMigrad.h>
+#include <Minuit2/MnPrint.h>
+#include <Minuit2/FunctionMinimum.h>
+
 using namespace std;
 
 const fptype _mD0 = 1.8645; 
@@ -28,6 +33,14 @@ int main (int argc, char** argv) {
   // Command line options can be added here.
   bool minuit1;
   app.add_flag("--minuit1", minuit1, "Use Minuit 1 instead of 2");
+
+  bool minuit2
+  app.add_flag("--minuit2", minuit2, "Use explicit minuit2 instance");
+
+  std::string filename;
+  app.add_option("filename", filename, "The file to run")
+    ->required()
+    ->check(CLI::ExistingFile);
   
   try {
       app.run();
@@ -56,7 +69,7 @@ int main (int argc, char** argv) {
 
   unsigned int MCevents = 0;
 //Load in nTuple and give it to currData/addevent 
-  fstream input("DZeroLHCbData.txt", std::ios_base::in);
+  fstream input(filename, std::ios_base::in);
   while(input >> *m12 >> *m34 >> *cos12 >> *cos34 >> *phi){
     //if(!*m12 || !*m34 || !*cos12 || !*cos34 || !*phi)
     //    continue;
@@ -435,11 +448,24 @@ int main (int argc, char** argv) {
 
   if(minuit1) {
     GooFit::FitManagerMinuit1 datapdf(signal);
+    datapdf.useHesseBefore(false);
     datapdf.fit();
     return 0; 
   } else {
-    GooFit::FitManagerMinuit2 datapdf(signal);
-    datapdf.fit();
-    return datapdf; 
+
+    if(minuit2) {
+      GooFit::Params upar{*signal};
+      GooFit::FCN fcn{upar};
+      Minuit2::MnPrint::SetLevel(3);
+      Minuit2::MnMigrad migrad{fcn, upar};
+      Minuit2::FunctionMinimum min = migrad(10000);
+      cout << min << endl;
+      return 0;
+    } else {
+      GooFit::FitManagerMinuit2 datapdf(signal);
+      datapdf.setMaxCalls(10000);
+      datapdf.fit();
+      return datapdf; 
+    }
   }
 }
