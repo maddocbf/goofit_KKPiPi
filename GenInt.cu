@@ -10,6 +10,7 @@
 // GooFit stuff
 #include "goofit/Variable.h" 
 #include "goofit/PDFs/PolynomialPdf.h" 
+#include "goofit/Log.h"
 #include "goofit/UnbinnedDataSet.h"
 #include "goofit/PDFs/DP4Pdf.h"
 #include "goofit/PDFs/TruthResolution_Aux.h" 
@@ -26,6 +27,7 @@
 #include <goofit/Application.h>
 
 using namespace std;
+using namespace GooFit; 
 
 // Constants used in more than one PDF component. 
 const fptype _mD0 = 1.8645; 
@@ -300,15 +302,15 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
  
  Amplitude* AMP_KstarM2Kstar     = new Amplitude( "KstarM2Kstar", new Variable("KstarM2Kstar_real", AmpVec[14] ),   new Variable("KstarM2Kstar_imag",AmpVec[15] ), LSKstarM2Kstar  , SFKstarM2Kstar , 1);
    
- Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", 1),  new Variable("KstarKstarbarS_imag", 0  ), LSKstarKstarbarS  , SFKstarKstarS , 1);
+ Amplitude* AMP_KstarKstarbarS          = new Amplitude( "KstarKstarbarS",      new Variable("KstarKstarbarS_real", 0.707),  new Variable("KstarKstarbarS_imag", 0.707  ), LSKstarKstarbarS  , SFKstarKstarS , 1);
  
 
- Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real",0.707),  new Variable("KstarKstarbarP_imag", -0.707  ), LSKstarKstarbarP  , SFKstarKstarP , 1);
+ Amplitude* AMP_KstarKstarbarP          = new Amplitude( "KstarKstarbarP",      new Variable("KstarKstarbarP_real",0.707),  new Variable("KstarKstarbarP_imag", 0.707  ), LSKstarKstarbarP  , SFKstarKstarP , 1);
  
 
  Amplitude* AMP_KstarKstarbarD          = new Amplitude( "KstarKstarbarD",      new Variable("KstarKstarbarD_real", AmpVec[20]),  new Variable("KstarKstarbarD_imag", AmpVec[21]  ), LSKstarKstarbarD  , SFKstarKstarD , 1);
   
- Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   0.707),  new Variable("PhiRhoS_imag", -0.707), LSPhiRhoS  , SFPhiRhoS , 1);
+ Amplitude* AMP_PhiRhoS       = new Amplitude( "PhiRhoS",   new Variable("PhiRhoS_real",   1),  new Variable("PhiRhoS_imag", 0), LSPhiRhoS  , SFPhiRhoS , 1);
 
 
  Amplitude* AMP_PhiRhoP       = new Amplitude( "PhiRhoP",   new Variable("PhiRhoP_real", 1 ),  new Variable("PhiRhoP_imag", 0 ), LSPhiRhoP  , SFPhiRhoP , 1);
@@ -336,9 +338,9 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarS);
   DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarP);
   //DKKPP_DI->amplitudes.push_back(AMP_KstarKstarbarD);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
-  //DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoS);
+  DKKPP_DI->amplitudes.push_back(AMP_PhiRhoP);
+  ////DKKPP_DI->amplitudes.push_back(AMP_PhiRhoD);
   //DKKPP_DI->amplitudes.push_back(AMP_PhiFZero); 
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes1);
   //DKKPP_DI->amplitudes.push_back(AMP_NonRes2);
@@ -377,8 +379,8 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
   UnbinnedDataSet currData(vars); 
 
  
-  //DKKPP_DI->_xmixing->value = strtof(argv[5], NULL);
-  //DKKPP_DI->_ymixing->value = strtof(argv[6], NULL);
+  //DKKPP_DI->_xmixing = strtof(argv[5], NULL);
+  //DKKPP_DI->_ymixing = strtof(argv[6], NULL);
 
   vector<Variable*> observables;
   vector<Variable*> coefficients; 
@@ -458,7 +460,7 @@ Variable* K11270M  = new Variable("K1_1270M", 1.272);
         // printf("Buffer %i: %.5g %.5g %.5g %.5g %.5g %.5g \n",i, (*myweights)[i],(*Buffer_m12)[i], (*Buffer_m34)[i], (*Buffer_c12)[i], (*Buffer_c34)[i], (*Buffer_phi)[i], (*Buffer_dt)[i]);
       }
     }
-    fprintf(stderr,"Run # %i: x=%.6g y=%.6g Using accept-reject method leaves you with %i out of %i events.  %.4g %% of Total offset: %u\n",RunNum, DKKPP_DI->_xmixing->value, DKKPP_DI->_ymixing->value, keptEvts, BatchSize, generatedEvents*100.0/genEvts, offi);
+    GOOFIT_INFO("Run # {}: x={:.6} y={:.6} Using accept-reject method leaves you with {} out of {} events.  {:.4} % of Total offset: {}\n",RunNum, DKKPP_DI->_xmixing->getValue(), DKKPP_DI->_ymixing->getValue(), keptEvts, BatchSize, generatedEvents*100.0/genEvts, offi);
     offi += BatchSize;
     delete variables[0];
     delete variables[1];

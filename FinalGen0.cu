@@ -391,8 +391,8 @@ int main (int argc, char** argv) {
   UnbinnedDataSet currData(vars); 
 
  
-  DK3P_DI->_xmixing->value = strtof(argv[5], NULL);
-  DK3P_DI->_ymixing->value = strtof(argv[6], NULL);
+  *DK3P_DI->_xmixing = strtof(argv[5], NULL);
+  *DK3P_DI->_ymixing = strtof(argv[6], NULL);
 
   vector<Variable*> observables;
   vector<Variable*> coefficients; 
@@ -468,7 +468,7 @@ int main (int argc, char** argv) {
         // printf("Buffer %i: %.5g %.5g %.5g %.5g %.5g %.5g \n",i, (*myweights)[i],(*Buffer_m12)[i], (*Buffer_m34)[i], (*Buffer_c12)[i], (*Buffer_c34)[i], (*Buffer_phi)[i], (*Buffer_dt)[i]);
       }
     }
-    fprintf(stderr,"Run # %i: x=%.6g y=%.6g Using accept-reject method leaves you with %i out of %i events.  %.4g %% of Total offset: %u\n",RunNum, DK3P_DI->_xmixing->value, DK3P_DI->_ymixing->value, keptEvts, BatchSize, generatedEvents*100.0/genEvts, offi);
+    fprintf(stderr,"Run # %i: x=%.6g y=%.6g Using accept-reject method leaves you with %i out of %i events.  %.4g %% of Total offset: %u\n",RunNum, *DK3P_DI->_xmixing, *DK3P_DI->_ymixing, keptEvts, BatchSize, generatedEvents*100.0/genEvts, offi);
     offi += BatchSize;
     delete variables[0];
     delete variables[1];

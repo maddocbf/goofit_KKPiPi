@@ -4,6 +4,7 @@
 
 // GooFit stuff
 #include "goofit/Application.h"
+#include "goofit/Log.h"
 #include "goofit/Variable.h" 
 #include "goofit/fitting/FitManagerMinuit1.h"
 #include "goofit/fitting/FitManagerMinuit2.h"
@@ -17,6 +18,7 @@
 #include <Minuit2/FunctionMinimum.h>
 
 using namespace std;
+using namespace GooFit;
 
 const fptype _mD0 = 1.8645; 
 const fptype piPlusMass = 0.13957018;
@@ -34,7 +36,7 @@ int main (int argc, char** argv) {
   bool minuit1;
   app.add_flag("--minuit1", minuit1, "Use Minuit 1 instead of 2");
 
-  bool minuit2
+  bool minuit2; 
   app.add_flag("--minuit2", minuit2, "Use explicit minuit2 instance");
 
   std::string filename;

@@ -41,8 +41,8 @@ int main (int argc, char** argv) {
   unsigned int MCevents = 0;
 //Load in nTuple and give it to currData/addevent 
   fstream input("DZeroBarLHCbData.txt", std::ios_base::in);
-  while(input >> m12->value >> m34->value >> cos12->value >> cos34->value >> phi->value){
-    eventNumber->value = MCevents++; 
+  while(input >> *m12 >> *m34 >> *cos12 >> *cos34 >> *phi){
+    *eventNumber = MCevents++; 
     currData.addEvent();
   }
 
