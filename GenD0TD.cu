@@ -11,11 +11,11 @@
 #include "goofit/Application.h"
 #include "goofit/Log.h"
 #include "goofit/Variable.h" 
-#include "goofit/PDFs/PolynomialPdf.h" 
+#include "goofit/PDFs/basic/PolynomialPdf.h" 
 #include "goofit/UnbinnedDataSet.h"
-#include "goofit/PDFs/DP4Pdf.h"
-#include "goofit/PDFs/TruthResolution_Aux.h" 
-#include "goofit/PDFs/Tddp4Pdf.h"
+#include "goofit/PDFs/physics/DP4Pdf.h"
+#include "goofit/PDFs/physics/TruthResolution_Aux.h" 
+#include "goofit/PDFs/physics/Tddp4Pdf.h"
 #include <thrust/count.h>
 #include <fstream>
 #include <iomanip>
